@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>双人关系适配度测评</title>
+<meta name="description" content="双人情侣关系适配度测评：分别填写，生成性格画像、相似互补、冲突风险与长期关系建议。">
+<link rel="stylesheet" href="/couple-assets/style.css">
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><span class="badge">双人 · 本地计算 · 不上传答案</span><h1>关系适配度测评</h1><p>不是“算命式合不合”，而是把两个人的性格、依恋、沟通、冲突、边界、价值观、生活方式与未来规划拆开来看。</p></header>
+
+<section id="intro" class="card">
+<div class="kicker">START</div><h2>先确定你是哪一位</h2>
+<p class="muted">如果你收到对方发来的专属链接，系统会自动识别你是 B；否则默认从 A 开始。</p>
+<div class="formrow">
+<label>你的昵称<input id="nickname" maxlength="18" placeholder="例如：小何 / A"></label>
+<label>对方昵称（可选）<input id="partnername" maxlength="18" placeholder="例如：小林 / B"></label>
+</div>
+<p id="roleHint" class="mini"></p>
+<button id="startBtn" class="btn">开始测评</button>
+<div class="note">建议按“真实的自己”作答，而不是按“希望自己成为的人”作答。共 60 题，1–5 级同意度。</div>
+</section>
+
+<section id="quiz" class="card hidden">
+<div class="qhead"><span id="qcat" class="chip"></span><span id="qno" class="mini"></span></div>
+<div class="progress"><i id="progress"></i></div>
+<div id="question" class="question"></div>
+<div id="scale" class="scale"></div>
+<div class="nav"><button id="prevBtn" class="btn secondary">上一题</button><button id="nextBtn" class="btn" disabled>下一题</button></div>
+</section>
+
+<section id="share" class="card hidden">
+<div class="kicker">A 已完成</div><h2>把专属链接发给另一位</h2>
+<p class="muted">链接只携带 A 的答题编码，不需要登录；B 完成后直接在浏览器生成联合报告。</p>
+<div id="shareUrl" class="sharebox"></div>
+<div class="actions"><button id="copyBtn" class="btn">复制链接</button><span id="copyOk" class="ok"></span></div>
+<div class="note">拿到链接的人可以参与配对测评，所以只发给你希望参与的人。</div>
+</section>
+
+<section id="report" class="hidden">
+<section class="card scorecard">
+<div class="ring" id="totalRing" style="--v:0"><div><strong id="totalScore">0</strong><small>/100</small></div></div>
+<div><div class="kicker">COUPLE REPORT</div><h2 id="reportTitle"></h2><p id="reportSummary" class="muted"></p><div id="headlinePills"></div></div>
+<div class="note full">本测评用于关系自我理解，不是临床心理诊断，也不替代现实相处经验、共同决策或专业咨询。总分不等于“应该结婚/分手”。</div>
+</section>
+
+<section class="card"><h2>两个人的性格画像</h2><p class="muted">先看“各自是什么样的人”，再看“放在一起会发生什么”。</p><div id="people" class="grid2"></div></section>
+<section class="card"><h2>关系核心维度</h2><p class="muted">分数越高，代表这组组合在该维度更容易形成稳定配合；差距不是天然坏事，关键看是否可协商。</p><div id="dims" class="dims"></div></section>
+<section class="card"><h2>相似、互补与冲突</h2><div class="grid2"><div><h3>主要相似点</h3><ul id="similar"></ul></div><div><h3>主要互补点</h3><ul id="complement"></ul></div></div><h3>潜在冲突源</h3><div id="conflicts"></div></section>
+<section class="card"><h2>长期关系分析</h2><div id="longterm"></div><h3>最值得认真谈清楚的问题</h3><ol id="questionsToDiscuss"></ol></section>
+<section class="card"><h2>详细对照</h2><div class="tablewrap"><table><thead><tr><th>维度</th><th id="thA">A</th><th id="thB">B</th><th>差距</th><th>解读</th></tr></thead><tbody id="compareBody"></tbody></table></div></section>
+<section class="card"><button id="restartBtn" class="btn secondary">重新开始一组测评</button></section>
+</section>
+<footer>Relationship Compatibility Lab · 60-item self-report · local-first</footer>
+</main>
+<script src="/couple-assets/questions.js"></script>
+<script src="/couple-assets/app.js"></script>
+</body>
+</html>
