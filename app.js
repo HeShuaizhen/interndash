@@ -4,6 +4,7 @@ const express    = require('express');
 const mongoose   = require('mongoose');
 const cors       = require('cors');
 const morgan     = require('morgan');
+const path       = require('path');
 
 // 引入原有业务路由
 const jobRoutes         = require('./jobs');
@@ -11,7 +12,6 @@ const applicationRoutes = require('./applications');
 const postRoutes        = require('./posts');
 
 // ─── 🚀 引入外部 1000+ 超级数据库 ───
-// 请确保你的项目根目录下已经创建了 jobsDB.js 文件
 const JOB_INDEX_DB = require('./jobsDB');
 
 const app  = express();
@@ -25,6 +25,11 @@ app.use(cors({
 app.use(express.json());
 app.use(morgan('dev'));
 
+// ─── 独立工具页：情侣关系适配度测评 ───────────────────────
+app.get('/couple-match', (req, res) => {
+  res.sendFile(path.join(__dirname, 'couple-match.html'));
+});
+
 // ─── 核心功能：海量数据搜索引擎 ─────────────────────────────
 const searchRouter = express.Router();
 
@@ -32,22 +37,18 @@ searchRouter.get('/live-search', async (req, res) => {
     const { q } = req.query; 
     try {
         if (!q) {
-            // 无搜索词时：从 1000 家里随机抽 20 家展示 (盲盒模式)
             const shuffled = [...JOB_INDEX_DB].sort(() => 0.5 - Math.random());
             return res.json({ data: shuffled.slice(0, 20) });
         }
 
         const kw = q.toLowerCase();
-        
-        // 瞬间从 1000 家企业中过滤匹配数据
         const results = JOB_INDEX_DB.filter(j => 
             (j.company && j.company.toLowerCase().includes(kw)) || 
             (j.tags && j.tags.some(t => t.toLowerCase().includes(kw))) ||
             (j.title && j.title.toLowerCase().includes(kw)) ||
             (j.location && j.location.toLowerCase().includes(kw))
-        ).sort((a, b) => b.weight - a.weight); // 按企业权重降序排列
+        ).sort((a, b) => b.weight - a.weight);
 
-        // 如果搜不到精准结果，随机给 8 个硬核岗位作为兜底推荐
         if (results.length > 0) {
             res.json({ data: results });
         } else {
