@@ -26,8 +26,9 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // ─── 独立工具页：情侣关系适配度测评 ───────────────────────
+app.use('/couple-assets', express.static(path.join(__dirname, 'couple-assets')));
 app.get('/couple-match', (req, res) => {
-  res.sendFile(path.join(__dirname, 'couple-match.html'));
+  res.sendFile(path.join(__dirname, 'couple-assets', 'index.html'));
 });
 
 // ─── 核心功能：海量数据搜索引擎 ─────────────────────────────
