@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "app.js", "use": "@vercel/node" },
+    { "src": "couple-assets/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/couple-match", "dest": "/couple-assets/index.html" },
+    { "src": "/couple-assets/(.*)", "dest": "/couple-assets/$1" },
+    { "src": "/(.*)", "dest": "/app.js" }
+  ]
+}
